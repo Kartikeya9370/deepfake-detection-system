@@ -1,33 +1,26 @@
 # DeepFake Detection System
 
-A deep learning pipeline to classify images as **Fake** (deepfake) or **Real**. The system compares a custom CNN baseline with three pretrained models (ResNet18, VGG16, Vision Transformer) and provides a live web interface for interactive predictions.
+A notebook workflow for binary real/fake image classification, comparing a SmallCNN baseline with pretrained ResNet18, VGG16, and Vision Transformer models.
 
-## 🚀 Live Demo
+## Canonical notebook
 
-Try it yourself: [DeepFake Detector Playground](https://deepfake-detector-playground.lovable.app)
+Open [Deepfake_Detection.ipynb](./Deepfake_Detection.ipynb) in Jupyter Notebook, JupyterLab, or Google Colab. Run the cells from top to bottom.
 
-Upload an image and get an instant prediction with confidence score.
+## Setup
 
-## 📁 Repository Contents
+Use Python 3.11 or newer.
 
-- `DeepFake_Detection.ipynb` – The main Jupyter notebook with data loading, preprocessing, training, and evaluation.
-- `Explanation.pdf` – Detailed project report covering methodology, results, challenges, and deployment.
-- `README.md` – This file.
-
-## 🧠 Models Evaluated
-
-| Model          | Type             | Best Val F1 | Best Val Acc |
-|----------------|------------------|-------------|--------------|
-| ResNet18       | Pretrained       | 0.9991      | 0.9991       |
-| VGG16          | Pretrained       | 0.9981      | 0.9981       |
-| Vision Transformer (ViT) | Pretrained | 0.9962      | 0.9961       |
-| SmallCNN       | From scratch     | 0.9038      | 0.8926       |
-
-All models were trained on the DeepFake vs Real 60k dataset using a two‑stage fine‑tuning strategy.
-
-## 🛠️ How to Use
-
-1. **Clone the repository**  
+1. Install a PyTorch and TorchVision pair matching your operating system and compute platform from the [official PyTorch selector](https://pytorch.org/get-started/locally/).
+2. Install the project dependencies:
    ```bash
-   git clone https://github.com/yourusername/deepfake-detection.git
-   cd deepfake-detection
+   python -m pip install -r requirements.txt
+   ```
+3. Open the notebook and run its setup and dataset cells before training.
+
+The notebook downloads the [DeepFake vs Real 60K dataset](https://www.kaggle.com/datasets/prithivsakthiur/deepfake-vs-real-60k) with KaggleHub. If Kaggle requests account access or acceptance of dataset terms, complete that through Kaggle's supported flow; do not store credentials in the notebook or repository. A GPU is recommended because training four models may take hours on a CPU.
+
+## Training and evaluation
+
+The notebook documents the random seed, dataset split, model settings, and epoch batch cap in its configuration cell. Set `max_batches_per_epoch` to `None` to use all batches. Model comparison is reported on the validation split. The notebook notes the project's dataset-integrity concern and does not present validation metrics as an independent test benchmark.
+
+Model checkpoints and metadata are written under `artifacts/checkpoints/`, which is ignored by Git.
